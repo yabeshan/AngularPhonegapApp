@@ -1,5 +1,10 @@
-var angulargap = angular.module("angulargap", []);
+function onDeviceReady() {
+//    angular.bootstrap(document, ["appGap"]);
+}
 
-angulargap.controller("HomeController", function($scope){
-//    $scope.message = "AngularJS!";
-});
+document.addEventListener('deviceready', onDeviceReady, false);
+setTimeout(function(){
+    if (window.location.protocol.indexOf('file:')==0) {
+        onDeviceReady();    
+    }
+},200);
