@@ -101,7 +101,7 @@ appGap.controller('MapPanelController', function($scope, $state) {
     var searchBox = new google.maps.places.SearchBox( (input) );
 
     google.maps.event.addListener(searchBox, 'places_changed', function() {
-        alert(111);
+//        alert(111);
 //        var places = searchBox.getPlaces();
 //
 //        for (var i = 0, marker; marker = markers[i]; i++) {
@@ -144,3 +144,92 @@ appGap.controller('MapPanelController', function($scope, $state) {
 //        searchBox.setBounds(bounds);
 //    });
 });
+
+
+appGap.directive(
+    "bnDocumentClick",
+    function( $document, $parse ){
+
+        // I connect the Angular context to the DOM events.
+        var linkFunction = function( $scope, $element, $attributes ){
+
+            // Get the expression we want to evaluate on the
+            // scope when the document is clicked.
+            var scopeExpression = $attributes.bnDocumentClick;
+
+            // Compile the scope expression so that we can
+            // explicitly invoke it with a map of local
+            // variables. We need this to pass-through the
+            // click event.
+            //
+            // NOTE: I ** think ** this is similar to
+            // JavaScript's apply() method, except using a
+            // set of named variables instead of an array.
+            var invoker = $parse( scopeExpression );
+
+            // Bind to the document click event.
+            $document.on(
+                "click",
+                function( event ){
+
+                    // When the click event is fired, we need
+                    // to invoke the AngularJS context again.
+                    // As such, let's use the $apply() to make
+                    // sure the $digest() method is called
+                    // behind the scenes.
+                    $scope.$apply(
+                        function(){
+
+                            // Invoke the handler on the scope,
+                            // mapping the jQuery event to the
+                            // $event object.
+                            invoker(
+                                $scope,
+                                {
+                                    $event: event
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+            // TODO: Listen for "$destroy" event to remove
+            // the event binding when the parent controller
+            // is removed from the rendered document.
+
+        };
+
+        // Return the linking function.
+        return( linkFunction );
+
+    }
+);
+
+
+// -------------------------------------------------- //
+// -------------------------------------------------- //
+
+
+// I am the controller for the Body tag.
+appGap.controller(
+    "DemoController",
+    function( $scope ) {
+
+        // Set the initial X/Y values.
+        $scope.mouseX = "N/A";
+        $scope.mouseY = "N/A";
+
+        // When the document is clicked, it will invoke
+        // this method, passing-through the jQuery event.
+        $scope.handleClick = function( event ){
+
+            $scope.mouseX = event.pageX;
+            $scope.mouseY = event.pageY;
+console.log( event );
+        };
+
+    }
+);

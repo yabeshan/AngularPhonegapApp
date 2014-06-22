@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ionicApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -19,7 +19,8 @@
 
 </head>
 
-<body ng-app="ionicApp" animation="slide-left-right-ios7">
+<body ng-controller="DemoController"
+      bn-document-click="handleClick( $event )">
 
 <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
 
