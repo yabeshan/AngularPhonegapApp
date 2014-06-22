@@ -8,7 +8,7 @@
     <name>Station Locator</name>
 
     <description>
-        Station Locator Ionic
+        Station Locator Ionic Angular
     </description>
 
     <gap:plugin name="com.phonegap.plugin.statusbar" />
