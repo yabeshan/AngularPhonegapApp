@@ -80,21 +80,24 @@ appGap.controller('HomeCtrl', function($scope, $state, $window) {
 
 });
 
+appGap.gMap = null;
 appGap.controller('MapPanelController', function($scope, $state) {
+    if (appGap.gMap!=null) return;
+
     var markers = [];
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+    appGap.gMap = new google.maps.Map(document.getElementById('map-canvas'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     var defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(-33.8902, 151.1759),
         new google.maps.LatLng(-33.8474, 151.2631));
-    map.fitBounds(defaultBounds);
+    appGap.gMap.fitBounds(defaultBounds);
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
         document.getElementById('pac-input'));
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    appGap.gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var searchBox = new google.maps.places.SearchBox(
         /** @type {HTMLInputElement} */(input));
@@ -102,6 +105,7 @@ appGap.controller('MapPanelController', function($scope, $state) {
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function() {
+        alert(111);
         var places = searchBox.getPlaces();
 
         for (var i = 0, marker; marker = markers[i]; i++) {
@@ -122,7 +126,7 @@ appGap.controller('MapPanelController', function($scope, $state) {
 
             // Create a marker for each place.
             var marker = new google.maps.Marker({
-                map: map,
+                map: appGap.gMap,
                 icon: image,
                 title: place.name,
                 position: place.geometry.location
@@ -133,14 +137,14 @@ appGap.controller('MapPanelController', function($scope, $state) {
             bounds.extend(place.geometry.location);
         }
 
-        map.fitBounds(bounds);
-        map.zoom = 4;
+        appGap.gMap.fitBounds(bounds);
+        alert(222);
     });
 
     // Bias the SearchBox results towards places that are within the bounds of the
     // current map's viewport.
-    google.maps.event.addListener(map, 'bounds_changed', function() {
-        var bounds = map.getBounds();
+    google.maps.event.addListener(appGap.gMap, 'bounds_changed', function() {
+        var bounds = appGap.gMap.getBounds();
         searchBox.setBounds(bounds);
     });
 });
