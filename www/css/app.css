@@ -15,27 +15,22 @@ body {
     background-color: #ccc;
 }
 
-/************************************************ INTERFACE *******************************************/
+.page {
+    background-color: rgba(0,255,0,.1);top:0px;bottom:0px;left:0px;right:0px;position: absolute;
+}
 
+/************************************************ MAP *******************************************/
+
+#map-canvas {
+    background-color: rgba(0,255,255,.1);top:50px;bottom:50px;left:0px;right:0px;position: absolute;
+}
 
 #home-button-map {
     background-color: #090;width: 100px;height: 100px;cursor: pointer;
 }
 #home-button-map:hover {
-    background-color: #009;
+    background-color: #090;
 }
 #home-button-map:active {
     background-color: #900;
-}
-#home-button-map:checked {
-    background-color: #099;
-}
-#home-button-map:focus {
-    background-color: #909;
-}
-#home-button-map:link {
-    background-color: #999;
-}
-#home-button-map::selection {
-    background-color: #990;
 }

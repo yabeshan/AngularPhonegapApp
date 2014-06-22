@@ -1,16 +1,12 @@
 
-<ion-view>
-    <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
+<div class="page">
 
-        <div style="background-color: rgba(255,0,0,.1);top:60px;bottom:60px;left:0px;right:0px;position: absolute;">
-            Map content
+    <div id="map-canvas" ng-controller="MapPanelController"></div>
 
-            <div class="button" ng-click="showPopup(1)">Open fullscreen popup</div>
-            <div class="button" ng-click="showPopup(2)">Open modal popup</div>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
-        </div>
+    <div class="button" ng-click="openMenu()">Open menu</div>
+    <div class="button" ng-click="showPopup(2)">Open modal popup</div>
 
-</ion-view>
+</div>
 
